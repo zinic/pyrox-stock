@@ -130,5 +130,3 @@ class RBACFilter(filtering.HttpFilter):
                     'the %(resource)s resource')
         LOG.info(logline % {'method': method, 'resource': resource})
         return filtering.reject(_403_FORBIDDEN)
-
-

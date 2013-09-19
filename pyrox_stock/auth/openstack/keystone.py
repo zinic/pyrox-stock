@@ -36,7 +36,7 @@ def keystone_auth():
     auth_url = _CONFIG.get(_CONFIG_KEY, 'keystone_url')
 
     id_regex = re.compile(
-            config.get(_CONFIG_KEY, 'id_regex'))
+        config.get(_CONFIG_KEY, 'id_regex'))
 
     keystone_client = KeystoneClient(
         username=service_user,
@@ -73,4 +73,3 @@ class KeystoneAuthFilter(filtering.HttpFilter):
                     _LOG.exception(ex)
 
         return filtering.reject()
-

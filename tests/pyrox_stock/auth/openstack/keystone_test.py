@@ -28,8 +28,8 @@ class WhenAuthenticatingRequests(unittest.TestCase):
         self.auth_token_header.values.append('12345')
 
         self.request.get_header.side_effect = lambda x: {
-                'X-Auth-Token': self.auth_token_header
-            }.get(x)
+            'X-Auth-Token': self.auth_token_header
+        }.get(x)
 
     def test_should_authenticate_good_requests(self):
         action = self.keystone_filer.on_request(self.request)
@@ -54,4 +54,3 @@ class WhenAuthenticatingRequests(unittest.TestCase):
         action = self.keystone_filer.on_request(self.request)
 
         self.assertTrue(action.kind == filtering.REJECT)
-
