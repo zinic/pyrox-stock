@@ -5,7 +5,7 @@ import pyrox.http as http
 import pyrox.filtering as filtering
 
 from mock import MagicMock
-from pyrox_stock.auth.openstack.keystone import KeystoneAuthFilter
+from pyrox_stock.auth.openstack.keystone import KeystoneTokenValidationFilter
 
 
 class WhenAuthenticatingRequests(unittest.TestCase):
@@ -22,7 +22,7 @@ class WhenAuthenticatingRequests(unittest.TestCase):
         self.request.url = '/v1/tenant/resource'
 
         id_regex = re.compile('/v1/([^/?#]+).*')
-        self.keystone_filer = KeystoneAuthFilter(id_regex, self.client)
+        self.keystone_filer = KeystoneTokenValidationFilter(id_regex, self.client)
 
         self.auth_token_header = http.HttpHeader('X-Auth-Token')
         self.auth_token_header.values.append('12345')

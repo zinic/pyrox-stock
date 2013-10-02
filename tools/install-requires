@@ -1,0 +1,4 @@
+pyrox>=0.2.2
+python-keystoneclient>=0.3.2
+pyzmq>=13.1.0
+msgpack-python>=0.3.0

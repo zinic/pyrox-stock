@@ -26,7 +26,7 @@ _CONFIG_KEY = 'auth.openstack.keystone'
 X_AUTH_TOKEN = 'X-Auth-Token'
 
 _CONFIG = ConfigParser()
-_CONFIG.read("/etc/pyrox/auth/keystone.conf")
+_CONFIG.read("/etc/pyrox/keystone/keystone.conf")
 
 
 def keystone_auth():
@@ -44,10 +44,10 @@ def keystone_auth():
         tenant_name=service_tenant,
         auth_url=auth_url)
 
-    return KeystoneAuthFilter(id_regex, keystone_client)
+    return KeystoneTokenValidationFilter(id_regex, keystone_client)
 
 
-class KeystoneAuthFilter(filtering.HttpFilter):
+class KeystoneTokenValidationFilter(filtering.HttpFilter):
 
     def __init__(self, id_regex, keystone_client):
         self.id_regex = id_regex

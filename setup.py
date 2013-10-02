@@ -30,8 +30,8 @@ setup(
         'Topic :: Internet',
         'Topic :: Utilities'
     ],
-    tests_require=read('./etc/pip/tests-require.txt'),
-    install_requires=read('./etc/pip/install-requires.txt'),
+    tests_require=read('./tools/tests-require'),
+    install_requires=read('./tools/install-requires'),
     test_suite='nose.collector',
     zip_safe=False,
     include_package_data=True,

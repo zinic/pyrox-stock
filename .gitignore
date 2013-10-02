@@ -1,3 +1,4 @@
+.python-version
 docs/_build/
 build/
 dist/
@@ -14,3 +15,4 @@ pyrox/http/model_util.c
 *.DS_Store*
 nosetests.xml
 */coverage.xml
+
