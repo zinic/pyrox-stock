@@ -95,8 +95,9 @@ class RBACFilter(filtering.HttpFilter):
         rules = _load_rules(rules_path)
         self.acl_map = _create_acl_map(rules)
 
-    def on_request(self, request):
-        path = request.url
+    @filtering.handles_request_head
+    def on_request_head(self, request_head):
+        path = request_head.url
 
         for resource, route, acl in self.acl_map:
             if route.match(path):
@@ -105,7 +106,7 @@ class RBACFilter(filtering.HttpFilter):
             LOG.debug(_('Requested path not recognized. Skipping RBAC.'))
             return
 
-        roles = request.get_header('X-Roles')
+        roles = request_head.get_header('X-Roles')
 
         if not roles:
             LOG.error(_('Request headers did not include X-Roles'))
@@ -113,7 +114,7 @@ class RBACFilter(filtering.HttpFilter):
 
         given_roles = set(roles.values) if roles else EMPTY_SET
 
-        method = request.method
+        method = request_head.method
         try:
             authorized_roles = acl[method]
         except KeyError:

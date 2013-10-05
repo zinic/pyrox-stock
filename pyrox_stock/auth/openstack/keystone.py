@@ -29,7 +29,11 @@ _CONFIG = ConfigParser()
 _CONFIG.read("/etc/pyrox/keystone/keystone.conf")
 
 
-def keystone_auth():
+def keystone_token_validator():
+    """
+    Factory method for token validation filters
+    """
+
     service_user = _CONFIG.get(_CONFIG_KEY, 'service_user')
     service_tenant = _CONFIG.get(_CONFIG_KEY, 'service_tenant')
     password = _CONFIG.get(_CONFIG_KEY, 'password')
@@ -53,11 +57,12 @@ class KeystoneTokenValidationFilter(filtering.HttpFilter):
         self.id_regex = id_regex
         self.client = keystone_client
 
-    def on_request(self, request_message):
-        token_header = request_message.get_header(X_AUTH_TOKEN)
+    @filtering.handles_request_head
+    def on_request_head(self, request_head):
+        token_header = request_head.get_header(X_AUTH_TOKEN)
 
         if token_header and len(token_header.values) >= 1:
-            match = self.id_regex.match(request_message.url)
+            match = self.id_regex.match(request_head.url)
 
             if match and len(match.groups()) >= 1:
                 tenant_id = match.group(1)
