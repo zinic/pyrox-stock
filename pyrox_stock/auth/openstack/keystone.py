@@ -73,7 +73,7 @@ class KeystoneTokenValidationFilter(filtering.HttpFilter):
                         tenant_id=tenant_id)
 
                     if auth_result:
-                        return filtering.pass_event()
+                        return filtering.next()
                 except Exception as ex:
                     _LOG.exception(ex)
 
